@@ -43,6 +43,30 @@ namespace MyBank
             Console.WriteLine($"Nuevo balance: {account.Balance}");
 
             Console.WriteLine(account.GetAccountHistory());
+
+
+            // Cuenta de intereses
+            var interesEarningAccount = new InterestEarningAccount("Mario", 2000);
+            interesEarningAccount.MakeDeposit(100, DateTime.Now, "Para las sodas");
+            interesEarningAccount.MakeDeposit(200, DateTime.Now, "Regalo de cumpleaños");
+            interesEarningAccount.MakeWithdrawal(300, DateTime.Now, "Mandado");
+            interesEarningAccount.PerformMonthEndTransactions();
+            Console.WriteLine(interesEarningAccount.GetAccountHistory());
+
+            // Cuenta de tarjeta de regalo
+            var giftCardAccount = new GiftCardAccount("Rene", 100, 50);
+            giftCardAccount.MakeWithdrawal(10, DateTime.Now, "Regalo");
+            giftCardAccount.MakeWithdrawal(12, DateTime.Now, "Regalo 2");
+            giftCardAccount.PerformMonthEndTransactions();
+            Console.WriteLine(giftCardAccount.GetAccountHistory());
+
+            // Cuenta de línea de crédito
+            var lineOfCredit = new LineOfCreditAccount("line of credit", 0, 2000);
+            lineOfCredit.MakeWithdrawal(1000, DateTime.Now, "Salida al cine");
+            lineOfCredit.MakeDeposit(100, DateTime.Now, "Pago de cine parcial");
+            lineOfCredit.MakeWithdrawal(2000, DateTime.Now, "Restaurante");
+            lineOfCredit.PerformMonthEndTransactions();
+            Console.WriteLine(lineOfCredit.GetAccountHistory());
         }
 
 

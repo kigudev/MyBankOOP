@@ -8,7 +8,11 @@ namespace MyBank
     {
         public string Number { get; }
         public string Owner { get; set; }
-        public decimal Balance { get {
+
+        public decimal Balance
+        {
+            get
+            {
                 decimal balance = 0;
                 foreach (var item in allTransactions)
                 {
@@ -17,21 +21,29 @@ namespace MyBank
                 return balance;
             }
         }
-        private List<Transaction> allTransactions { get; set; } = new List<Transaction>();
 
+        private List<Transaction> allTransactions = new List<Transaction>();
         private static int accountNumberSeed = 1234567890;
+        private readonly decimal _minimumBalance;
 
-        public BankAccount(string name, decimal initialBalance) {
+        public BankAccount(string name, decimal initialBalance) : this(name, initialBalance, 0) {        
+        }
+
+        public BankAccount(string name, decimal initialBalance, decimal minimumBalance)
+        {
             Owner = name;
-
-            MakeDeposit(initialBalance, DateTime.Now, "Balance inicial");
+            _minimumBalance = minimumBalance;
 
             Number = accountNumberSeed.ToString();
             accountNumberSeed++;
+
+            if(initialBalance > 0)
+                MakeDeposit(initialBalance, DateTime.Now, "Balance inicial");
         }
 
-        public void MakeDeposit(decimal amount, DateTime date, string note) {
-            if(amount <= 0)
+        public void MakeDeposit(decimal amount, DateTime date, string note)
+        {
+            if (amount <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(amount), "La cantidad de depósito tiene que ser positivo");
             }
@@ -39,18 +51,32 @@ namespace MyBank
             var deposit = new Transaction(amount, date, note);
             allTransactions.Add(deposit);
         }
-        public void MakeWithdrawal(decimal amount, DateTime date, string note) {
+
+        public void MakeWithdrawal(decimal amount, DateTime date, string note)
+        {
             if (amount <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(amount), "La cantidad de depósito tiene que ser positivo");
             }
-            if(Balance - amount < 0)
-            {
-                throw new InvalidOperationException("No suficientes fondos en la cuenta");
-            }
 
-            var deposit = new Transaction(-amount, date, note);
-            allTransactions.Add(deposit);
+            var overdraftTransaction = CheckWithdrawlLimit(Balance - amount < _minimumBalance);
+            var withdrawal = new Transaction(-amount, date, note);
+            allTransactions.Add(withdrawal);
+
+            if (overdraftTransaction != null)
+                allTransactions.Add(overdraftTransaction);
+        }
+
+        protected virtual Transaction CheckWithdrawlLimit(bool isOverdrawn)
+        {
+            if (isOverdrawn)
+            {
+                throw new InvalidOperationException("No tienes suficientes fondos");
+            }
+            else
+            {
+                return default;
+            }
         }
 
         public string GetAccountHistory()
@@ -65,6 +91,10 @@ namespace MyBank
             }
 
             return report.ToString();
+        }
+
+        public virtual void PerformMonthEndTransactions()
+        {
         }
     }
 }
