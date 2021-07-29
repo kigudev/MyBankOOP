@@ -8,5 +8,6 @@ namespace LINQExample
         public string LastName { get; set; }
         public int ID { get; set; }
         public List<int> Scores { get; set; }
+        public int AverageScore { get; set; }
     }
 }

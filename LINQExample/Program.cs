@@ -82,8 +82,7 @@ namespace LINQExample
             var lastName = "Garcia";
             var studentQuery5 =
                 from student in students
-                //where student.LastName.Equals("garcia", StringComparison.CurrentCultureIgnoreCase)
-                where student.LastName == lastName.ToLower()
+                where student.LastName.Equals("garcia", StringComparison.CurrentCultureIgnoreCase)
                 select student.FirstName;
 
             //Console.WriteLine("Todos los garcias de la clase son:");
