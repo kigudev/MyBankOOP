@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodingConventions", "Coding
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asynchronous", "Asynchronous\Asynchronous.csproj", "{87B8F55C-8C72-439C-8D01-BDD5283660BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQExample", "LINQExample\LINQExample.csproj", "{5095E2BF-E89C-4018-99B6-2ABFD8150FAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{87B8F55C-8C72-439C-8D01-BDD5283660BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87B8F55C-8C72-439C-8D01-BDD5283660BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87B8F55C-8C72-439C-8D01-BDD5283660BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5095E2BF-E89C-4018-99B6-2ABFD8150FAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5095E2BF-E89C-4018-99B6-2ABFD8150FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5095E2BF-E89C-4018-99B6-2ABFD8150FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5095E2BF-E89C-4018-99B6-2ABFD8150FAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
