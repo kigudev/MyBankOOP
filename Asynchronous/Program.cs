@@ -1,35 +1,55 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Asynchronous
 {
-    class Program
+    internal class Program
     {
-        
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
             Coffee cup = PourCoffee();
             Console.WriteLine("el café está listo");
 
             Task<Egg> eggsTask = FryEggsAsync(2);
-            Egg eggs = await eggsTask;
-            Console.WriteLine("los huevos están listos");
-
             Task<Bacon> baconTask = FryBaconAsync(3);
-            Bacon bacons = await baconTask;
-            Console.WriteLine("El tocino está listo");
+            Task<Toast> toastTask = MakeToastWithButterAndJamAsync(2);
 
-            Task<Toast> toastTask = ToastBreadAsync(2);
-            Toast toast = await toastTask;
-            ApplyButter(toast);
-            ApplyJam(toast);
-            Console.WriteLine("El pan está listo");
+            //await Task.WhenAll(eggsTask, baconTask, toastTask);
+            var breakfastTasks = new List<Task> { eggsTask, baconTask, toastTask };
+
+            while (breakfastTasks.Count > 0)
+            {
+                Task finishedTask = await Task.WhenAny(breakfastTasks);
+
+                if (finishedTask == eggsTask)
+                {
+                    Console.WriteLine("los huevos están listos");
+                }
+                else if (finishedTask == baconTask)
+                {
+                    Console.WriteLine("El tocino está listo");
+                }
+                else if (finishedTask == toastTask)
+                {
+                    Console.WriteLine("El pan está listo");
+                }
+                breakfastTasks.Remove(finishedTask);
+            }
 
             Juice oj = PourOJ();
             Console.WriteLine("El jugo está listo");
 
             Console.WriteLine("El desayuno está listo");
+        }
 
+        private static async Task<Toast> MakeToastWithButterAndJamAsync(int number)
+        {
+            var toast = await ToastBreadAsync(number);
+            ApplyButter(toast);
+            ApplyJam(toast);
+
+            return toast;
         }
 
         private static Juice PourOJ()
@@ -49,7 +69,10 @@ namespace Asynchronous
                 Console.WriteLine("Poniendo una rebanada de pan en la tostadora");
             }
             Console.WriteLine("Tostando el pan...");
-            await Task.Delay(3000);
+            await Task.Delay(2000);
+            //Console.WriteLine("Ay se nos está quemando el pan");
+            //throw new InvalidOperationException("El pan está quemado");
+            await Task.Delay(1000);
             Console.WriteLine("Quitamos el pan de la tostadora");
             return new Toast();
         }
@@ -64,7 +87,7 @@ namespace Asynchronous
                 Console.WriteLine("Volteando tira de tocino...");
             }
             Console.WriteLine("Cocinando el tocino del otro lado");
-            Task.Delay(3000).Wait();
+            await Task.Delay(3000);
             Console.WriteLine($"Poner tocino en plato");
             return new Bacon();
         }
