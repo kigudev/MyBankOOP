@@ -7,9 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBank", "BankAccount\MyBan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodingConventions", "CodingConventions\CodingConventions.csproj", "{343EA037-1C06-458A-AEC5-C2213E1EE88A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asynchronous", "Asynchronous\Asynchronous.csproj", "{87B8F55C-8C72-439C-8D01-BDD5283660BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Asynchronous", "Asynchronous\Asynchronous.csproj", "{87B8F55C-8C72-439C-8D01-BDD5283660BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQExample", "LINQExample\LINQExample.csproj", "{5095E2BF-E89C-4018-99B6-2ABFD8150FAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LINQExample", "LINQExample\LINQExample.csproj", "{5095E2BF-E89C-4018-99B6-2ABFD8150FAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQExcercises", "LINQExcercises\LINQExcercises.csproj", "{AE2A7B4E-204A-4075-8349-D4E233749ECE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LambdaExpressions", "LambdaExpressions\LambdaExpressions.csproj", "{A149A054-A661-4495-A6E1-B34015F11C52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{5095E2BF-E89C-4018-99B6-2ABFD8150FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5095E2BF-E89C-4018-99B6-2ABFD8150FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5095E2BF-E89C-4018-99B6-2ABFD8150FAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE2A7B4E-204A-4075-8349-D4E233749ECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE2A7B4E-204A-4075-8349-D4E233749ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE2A7B4E-204A-4075-8349-D4E233749ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE2A7B4E-204A-4075-8349-D4E233749ECE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A149A054-A661-4495-A6E1-B34015F11C52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A149A054-A661-4495-A6E1-B34015F11C52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A149A054-A661-4495-A6E1-B34015F11C52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A149A054-A661-4495-A6E1-B34015F11C52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

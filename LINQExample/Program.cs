@@ -38,6 +38,9 @@ namespace LINQExample
                 orderby student.Scores[0] descending
                 select student;
 
+            var studentLambda = students.Where(c => c.Scores[0] > 90 && c.Scores[3] < 80)
+                .OrderBy(c => c.Scores[0]);
+
             //foreach (var student in studentQuery)
             //{
             //    Console.WriteLine($"{student.LastName} {student.FirstName} {student.Scores[0]}");
@@ -49,6 +52,10 @@ namespace LINQExample
                into studentGroup
                orderby studentGroup.Key
                select studentGroup;
+
+            var studentLambda2 = students
+                .GroupBy(student => student.LastName[0])
+                .OrderBy(student => student.Key);
 
             //foreach (var studentGroup in studentQuery2)
             //{
@@ -65,6 +72,10 @@ namespace LINQExample
                 where totalScore / 4 < student.Scores[0]
                 select $"{student.LastName} {student.FirstName}";
 
+            var studentLambda3 = students
+                .Where(student => (student.Scores[0] + student.Scores[1] + student.Scores[2] + student.Scores[3]) / 4 < student.Scores[0])
+                .Select(student => $"{student.LastName} {student.FirstName}");
+
             //foreach (var item in studentQuery3)
             //{
             //    Console.WriteLine(item);
@@ -75,6 +86,8 @@ namespace LINQExample
                 from student in students
                 let totalScore = student.Scores.Sum()
                 select totalScore;
+
+            var studentLambda4 = students.Average(student => student.Scores.Sum());
 
             var averageScore = studentQuery4.Average();
             Console.WriteLine("El promedio de la clase es: " + averageScore);
