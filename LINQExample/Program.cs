@@ -126,11 +126,11 @@ namespace LINQExample
               from student in students
               let totalScore = student.Scores.Sum()
               where totalScore > averageScore
-              select new { Id = student.ID, Score = totalScore};
+              select new { Id = student.ID, Score = totalScore };
 
             var studentLambda6 = students
                 .Where(student => student.Scores.Sum() > averageScore)
-                .Select(student => new { 
+                .Select(student => new {
                     Id = student.ID,
                     Score = student.Scores.Sum()
                 });
@@ -139,6 +139,7 @@ namespace LINQExample
             {
                 Console.WriteLine($"Student id: {item.Id} Score: {item.Score}");
             }
+
         }
 
         public static string MiMetodo(string x)
