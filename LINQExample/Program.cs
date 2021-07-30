@@ -38,10 +38,12 @@ namespace LINQExample
                 orderby student.Scores[0] descending
                 select student;
 
-            var studentLambda = students.Where(c => c.Scores[0] > 90 && c.Scores[3] < 80)
-                .OrderBy(c => c.Scores[0]);
+            IEnumerable<Student> studentLambda =
+                students
+                .Where(c => c.Scores[0] > 90 && c.Scores[3] < 80)
+                .OrderByDescending(c => c.Scores[0]);
 
-            //foreach (var student in studentQuery)
+            //foreach (var student in studentLambda)
             //{
             //    Console.WriteLine($"{student.LastName} {student.FirstName} {student.Scores[0]}");
             //}
@@ -55,16 +57,25 @@ namespace LINQExample
 
             var studentLambda2 = students
                 .GroupBy(student => student.LastName[0])
-                .OrderBy(student => student.Key);
+                .OrderBy(group => group.Key);
 
-            //foreach (var studentGroup in studentQuery2)
-            //{
-            //    Console.WriteLine(studentGroup.Key);
-            //    foreach (var student in studentGroup)
-            //    {
-            //        Console.WriteLine($"{student.LastName} {student.FirstName}");
-            //    }
-            //}
+            foreach (var studentGroup in studentQuery2)
+            {
+                Console.WriteLine(studentGroup.Key);
+                foreach (var student in studentGroup)
+                {
+                    Console.WriteLine($"{student.LastName} {student.FirstName}");
+                }
+            }
+
+            foreach (var studentGroup in studentLambda2)
+            {
+                Console.WriteLine(studentGroup.Key);
+                foreach (var student in studentGroup)
+                {
+                    Console.WriteLine($"{student.LastName} {student.FirstName}");
+                }
+            }
 
             var studentQuery3 =
                 from student in students
@@ -73,46 +84,66 @@ namespace LINQExample
                 select $"{student.LastName} {student.FirstName}";
 
             var studentLambda3 = students
-                .Where(student => (student.Scores[0] + student.Scores[1] + student.Scores[2] + student.Scores[3]) / 4 < student.Scores[0])
+                .Where(student => student.Scores.Sum() / 4 < student.Scores[0])
                 .Select(student => $"{student.LastName} {student.FirstName}");
 
-            //foreach (var item in studentQuery3)
-            //{
-            //    Console.WriteLine(item);
-            //}
+            foreach (var item in studentLambda3)
+            {
+                Console.WriteLine(item);
+            }
 
 
             var studentQuery4 =
                 from student in students
                 let totalScore = student.Scores.Sum()
                 select totalScore;
-
-            var studentLambda4 = students.Average(student => student.Scores.Sum());
-
             var averageScore = studentQuery4.Average();
-            Console.WriteLine("El promedio de la clase es: " + averageScore);
+
+            var averageScoreLambda = students.Average(student => student.Scores.Sum());
+
+            Console.WriteLine("El promedio de la clase es: " + averageScoreLambda);
+
+
+            // También se pueden utilizar métodos propios dentro de las consultas linq
+            // En ciertos casos podemos quitar el Where si nuestro siguiente método de extensión permite recibir una expresión lambda
+            var studentCount = students.Count(c => MiMetodo(c.ID.ToString()).StartsWith("1"));
+
 
             var lastName = "Garcia";
             var studentQuery5 =
                 from student in students
-                where student.LastName.Equals("garcia", StringComparison.CurrentCultureIgnoreCase)
+                where student.LastName.Equals(lastName, StringComparison.CurrentCultureIgnoreCase)
                 select student.FirstName;
 
-            //Console.WriteLine("Todos los garcias de la clase son:");
+            var studentLambda5 = students
+                .Where(student => student.LastName.Equals(lastName, StringComparison.CurrentCultureIgnoreCase))
+                .Select(c => c.FirstName);
+
+            //onsole.WriteLine("Todos los garcias de la clase son:");
             //Console.WriteLine(string.Join(", ", studentQuery5));
 
             var studentQuery6 =
               from student in students
               let totalScore = student.Scores.Sum()
               where totalScore > averageScore
-              select new{ Id = student.ID, Score = totalScore};
+              select new { Id = student.ID, Score = totalScore};
 
-            foreach (var item in studentQuery6)
+            var studentLambda6 = students
+                .Where(student => student.Scores.Sum() > averageScore)
+                .Select(student => new { 
+                    Id = student.ID,
+                    Score = student.Scores.Sum()
+                });
+
+            foreach (var item in studentLambda6)
             {
                 Console.WriteLine($"Student id: {item.Id} Score: {item.Score}");
             }
         }
 
-
+        public static string MiMetodo(string x)
+        {
+            return x;
+        }
     }
 }

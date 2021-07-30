@@ -49,8 +49,8 @@ namespace LINQExcercises
             var customerWealthQuery =
                 from customer in customers
                 group customer by customer.Bank into bank
-                //select new { Bank = bank.Key, Wealth = (from b in bank select b.Balance).Sum() };
-                select new { Bank = bank.Key, Wealth = bank.Sum(customer => customer.Balance) };
+                select new { Bank = bank.Key, Wealth = (from b in bank select b.Balance).Sum() };
+                //select new { Bank = bank.Key, Wealth = bank.Sum(customer => customer.Balance) };
 
             foreach (var item in customerWealthQuery)
             {
